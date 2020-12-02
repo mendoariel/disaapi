@@ -3,12 +3,17 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
   
 const app = express();
+
+app.use(cors())
 
 // View engine setup
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
+
+
 
 // Static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -23,15 +28,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/send', (req, res) => {
-    console.log(req);
+    console.log(req.body);
     const output = `
         <p>You have a new contact request</p>
         <h3>Contact Details</h3>
         <ul>
-            <li>Name: ${req.body.name}</li>
-            <li>Company: ${req.body.company}</li>
+            <li>Nombre: ${req.body.fullName}</li>
             <li>Email: ${req.body.email}</li>
-            <li>Phone: ${req.body.phone}</li>
+            <li>Asunto: ${req.body.subject}</li>
+            <li>Mensaje: ${req.body.message}</li>
         </ul>
         <h3>Messages</h3>
         <p>${ req.body.message }</p>
@@ -70,8 +75,8 @@ app.post('/send', (req, res) => {
         }
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        
-        res.render('contact', {layout: false, msg: 'Email has been sent'});
+        res.status(200).send(req.body.name);
+        //res.render('contact', {layout: false, msg: 'Email has been sent'});
     });
   
 
