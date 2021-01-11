@@ -30,15 +30,14 @@ app.get('/', (req, res) => {
 app.post('/send', (req, res) => {
     console.log(req.body);
     const output = `
-        <p>You have a new contact request</p>
-        <h3>Contact Details</h3>
+        <h2>Nueva consulta desde página de contacto</h2>
+        <h3>Detalle</h3>
         <ul>
             <li>Nombre: ${req.body.fullName}</li>
             <li>Email: ${req.body.email}</li>
             <li>Asunto: ${req.body.subject}</li>
-            <li>Mensaje: ${req.body.message}</li>
         </ul>
-        <h3>Messages</h3>
+        <h3>Consulta:</h3>
         <p>${ req.body.message }</p>
     `;
 
@@ -62,8 +61,8 @@ app.post('/send', (req, res) => {
     let mailOptions = {
 
         from: '"Nodemailer Contact" <development@disainsumos.com>', // sender address
-        to: "mendoariel@gmail.com", // list of receivers
-        subject: "Esto es un prueba ", // Subject line
+        to: "dindustriales@hotmail.com", // list of receivers
+        subject: "Consulta hecha desde la página de contacto", // Subject line
         text: "Hello world?", // plain text body
         html: output // html body
         
